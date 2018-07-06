@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台注册</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/Style/css/admin.css">
+    <link rel="shortcut icon" href="__STATIC__/admin/Style/images/favicon.ico"">
+</head>
+<body>
+    <div id="right" class="right">
+    <h1>添加用户</h1>
+    <div class="base">
+        <form action="<{:Url('admin/Redisterw/SaveUsr')}>" method ="post" id="edit_usr" enctype="multipart/form-data">
+            <input type="hidden" name="action"  value="<{$action}>">
+            <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>用户登陆名：</span>
+                <input type="text" name="usr_name" class="base-input fl" value="">
+            </div>
+            <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>用户昵称：</span>
+                <input type="text" name="display_name" class="base-input fl" value="">
+            </div>         
+             <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>手机号码</span>
+                <input type="text" name="usr_tel" class="base-input fl" value="">
+                 用于找回密码
+            </div>
+             <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>密码：（用于登录后台）</span>
+                <input type="password" name="password" class="base-input fl" >
+             </div> 
+             <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>输入验证码</span>
+                    <input autocomplete="off" placeholder="请输入验证码" name="login_cap" type="text" validateevent="true" class="base-input fl">
+                    <div class="login_prompt">请输入验证码</div>
+                     </div>
+                     <div class="base-row clearFix">
+                        <span class="base-name fl"><span class="text-red required"></span></span>
+                   <img  style="login_verify" src="<{:captcha_src( )}>" alt="captcha" onclick="this.src='<{:captcha_src( )}>?'+Math.random();" />
+               </div>
+               
+            <div class="base-row clearFix">
+                <span class="base-name fl">&nbsp;</span>
+                <input class="base-btn btn-blue fl" type="submit"></button>
+                <input class="base-btn btn-gray fl" type="reset"></button>
+            </div>
+        </form>
+    </div>
+    </div>
+</body>
+</html>

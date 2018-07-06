@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>后台登录</title>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/Style/css/admin.css">
+    <link rel="shortcut icon" href="__STATIC__/admin/Style/images/favicon.ico"">
+</head>
+<body>
+    <div class="login">
+        <div class="login_header">
+            <div class="cnt clearFix">
+                <img src="__STATIC__/admin/Style/images/favicon.ico"" alt="" class="fl">
+                <p class="top_font fl">药材基地</p>
+            </div>
+        </div>
+        <div class="cnt">
+            <h1 class="login_title">欢迎登录</h1>
+            <form method="post" action="checkLogin">
+            <ul class="login_list">
+                <li class="login_error">
+                    <input autocomplete="off" name="cName" placeholder="账户名" type="text" validateevent="true" class="login_input">
+                    <div class="login_prompt">请输入用户名</div>
+                </li>
+                <li>
+                    <input autocomplete="off" placeholder="请输入密码" name=" cPass" type="password" validateevent="true" class="login_input">
+                    <div class="login_prompt">请输入密码</div>
+                </li>
+                <li>
+                    <input autocomplete="off" placeholder="请输入验证码" name="login_cap" type="text" validateevent="true" class="login_input">
+                    <div class="login_prompt">请输入验证码</div>
+                   <img  style="login_verify" src="<{:captcha_src( )}>" alt="captcha" onclick="this.src='<{:captcha_src( )}>?'+Math.random();" />
+                </li>
+         
+                    
+                  
+                  
+                <li>
+                    <button class="login_btn btn-blue trans" type="submit">立即登录</button>
+                </li>
+                <li>
+                    <a href="<{:url('Redisterw/index')}>" class="fl text-blue">注册账号</a><a href="#" class="fr text-blue">忘记密码?</a>
+                </li>
+            </ul>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

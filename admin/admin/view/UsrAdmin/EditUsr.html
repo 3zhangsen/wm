@@ -1,0 +1,65 @@
+{include file="$tplIndexHeader" /}
+<div id="right" class="right">
+    <h1>添加用户</h1>
+    <div class="base">
+        <form action="<{:Url('admin/UsrAdmin/SaveUsr')}>" method ="post" id="edit_usr" enctype="multipart/form-data">
+            <input type="hidden" name="usr_id" value="<{$usr_info.id}>">
+            <input type="hidden" name="action" value="<{$action_name}>">
+            <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>用户登陆名：</span>
+                <input type="text" name="usr_name" class="base-input fl" value="<{$usr_info.usr_name}>">
+            </div>
+            <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>用户昵称：</span>
+                <input type="text" name="display_name" class="base-input fl" value="<{$usr_info.display_name}>">
+            </div>         
+             <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>手机号码</span>
+                <input type="text" name="usr_tel" class="base-input fl" value="<{$usr_info.tel}>">
+            </div>
+            {if condition="$usr_info.id eq ''" }
+             <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>密码：（用于登录后台）</span>
+                <input type="password" name="password" class="base-input fl" >
+             </div> 
+           
+            {/if}
+             <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>账号状态：</span>
+                <select name="usr_status" id="status" class="base-select fl">
+                    <option value="0" {if condition="$usr_info.usr_status eq 0"}selected = "selected"{/if} >待审核</option>
+                    <option value="1" {if condition="$usr_info.usr_status eq 1"}selected = "selected"{/if} >可用</option>
+                    <option value="2" {if condition="$usr_info.usr_status eq 2"}selected = "selected"{/if} >禁用</option>
+                </select>
+            </div>
+           <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>权限分组：</span>
+                <select name="group" id="group" class="base-select fl">
+                      <option value="0" {if condition="$usr_info.usr_group eq 0"}selected = "selected"{/if}>无操作权限</option>
+                    {volist name='group' id="val"}
+                        <option value="<{$val.id}>" {if condition="$usr_info.usr_group eq $val['id']"}selected = "selected"{/if}><{$val.group_name}></option>
+                    {/volist}
+                </select>
+                
+            </div>
+              
+              <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>输入验证码</span>
+                    <input autocomplete="off" placeholder="请输入验证码" name="login_cap" type="text" validateevent="true" class="base-input fl">
+                    <div class="login_prompt">请输入验证码</div>
+                     </div>
+                     <div class="base-row clearFix">
+                        <span class="base-name fl"><span class="text-red required"></span></span>
+                   <img  style="login_verify" src="<{:captcha_src( )}>" alt="captcha" onclick="this.src='<{:captcha_src( )}>?'+Math.random();" />
+               </div>
+               
+            <div class="base-row clearFix">
+                <span class="base-name fl">&nbsp;</span>
+                <input class="base-btn btn-blue fl" type="submit"></button>
+                <input class="base-btn btn-gray fl" type="reset"></button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

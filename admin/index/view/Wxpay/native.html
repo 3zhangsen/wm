@@ -1,0 +1,45 @@
+<html>
+ <script type="text/javascript" src="__STATIC__/admin/Style/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/Style/js/common.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/Style/js/jquery-1.8.3.min.js"></script>
+ 
+ <script>
+window.setInterval(showalert, 3000); 
+
+function showalert() 
+{ 
+  var goods_id = document.getElementById("goodsid").value;
+  $.ajax({ 
+        url: "http://price.zgycsc.com/echart/public/index.php/index/Checkorder/checkjs",         
+        type: 'POST',       //提交的方式
+        secureuri :false,   //是否启用安全提交     
+        data:{"id":goods_id},
+        dataType : 'json',
+         success: function(data){
+           // console.log(goods_id);
+            if(data==1024)
+            {
+                //console.log('111');
+                alert("你已经付费成功，请选择对应药品下载价格表");
+                 window.location.href="http://price.zgycsc.com/echart/public/index.php/index/Yaocai/echartprice"; 
+               }
+         }}
+         )
+         
+} 
+   
+
+</script>
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" /> 
+    <title>微信支付页面</title>
+</head>
+<input type="hidden" id="goodsid" class="goodsid" value="<{$goods_id}>">
+<body>
+
+    <div style="margin-left: 10px;color:#556B2F;font-size:30px;font-weight: bolder;">本项目为付费下载项目。你暂时没有购买，请使用微信扫描下面二维码，微信支付服务费用。支付完成后你可以下载你所购买药品的价格</div><br/>
+    <img alt="" src="http://price.zgycsc.com/echart/public/index.php/index/Wxpay/phpcode?data=<{$code_url}>" style="width:150px;height:150px;"/>
+    
+</body>
+</html>

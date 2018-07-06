@@ -1,0 +1,40 @@
+{include file="$tplIndexHeader" /}
+<div id="right" class="right">
+    <h1><{$webName}>--编辑</h1>
+    <div class="base">
+        <form action="<{:Url('admin/Group/Savegroup')}>" method ="post"  >
+            <div class="base-row clearFix">
+                <input type="hidden" name="id" value="<{$tableArr.id}>">
+                <span class="base-name fl"><span class="text-red required">*</span>名称：</span>
+                <input type="text" name="cName" id="code"class="base-input fl" value="<{$tableArr.group_name}>">
+            </div>         
+           <table width="50%" border="0" cellpadding="0" cellspacing="0" class="table01">
+            <thead>
+                <tr>
+                    <th width="30%">功能名称<i class="icon icon-sort"></i></th>
+                    <th width="20%">权限</th>
+                </tr>
+            </thead>
+            <tbody>
+              {volist name ="catalogArr" id="valb"}
+              <tr>
+                <td>
+                    <{$valb.cName}>
+                 </td>
+                  <td>
+                    <INPUT TYPE="checkbox" NAME="catalog[]" value="<{$valb.code}>" {if condition="in_array($valb['code'],$tableArr1)"}checked{/if} >
+                 </td>
+              </tr>
+              {/volist}
+            </tbody>
+        </table> 
+          <div class="base-row clearFix">
+                <span class="base-name fl">&nbsp;</span>
+                <input class="base-btn btn-blue fl" type="submit"></button>
+                <input class="base-btn btn-gray fl" type="reset"></button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

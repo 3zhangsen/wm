@@ -1,0 +1,58 @@
+{include file="$tplIndexHeader" /}
+<div id="right" class="right">
+    <h1><{$webName}></h1>
+    <div class="prompt">修改、删除操作等确认后进行。</div>
+    <div class="list">
+        <div class="operate clearFix">
+            <div class="operate-btn fl">
+                <a href="<{:Url($module_name.'/'.$controller_name.'/Addgroup')}>" class="btn btn-blue">添加</a>
+                <a href="<{:Url($module_name.'/'.$controller_name.'/Delgroup')}>" class="btn btn-blue">删除</a>
+            </div>
+            
+            </div>
+        </div>
+        <table width="50%" border="0" cellpadding="0" cellspacing="0" class="table01">
+            <thead>
+                <tr>
+                    
+                    <th width="30%">用户组</th>                   
+                    <th width="10%">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {volist name="tableArr" id="k" }
+                    <tr>
+                    <td><{$k.group_name}></td>
+                    <td>
+                        <a href="<{:Url($module_name.'/'.$controller_name.'/Editgroup',['id'=>$k.id])}>
+                            " class="text-blue">编辑</a>
+                        <a href="<{:Url($module_name.'/'.$controller_name.'/Delgroup',['id'=>$k.id])}>" class="text-blue">删除</a>
+                        
+                    </td>
+                    </tr>
+                {/volist}                
+                
+
+            </tbody>
+        </table>
+        <!-- <div class="page clearFix">
+            <span class="fl">已选 <b>1</b>项，共 <b>1</b> 项</span>
+            <div class="pageBar fr">
+                <span>每页显示</span>
+                <select name="" id="">
+                    <option value="0">10</option>
+                    <option value="1">20</option>
+                    <option value="2">40</option>
+                </select>
+                <a href="#">首页</a>
+                <a href="#">上一页</a>
+                <span>2/2</span>
+                <a href="#">下一页</a>
+                <a class="default" href="#">尾页</a>
+            </div>
+        </div> -->
+    </div>
+</div>
+
+</body>
+</html>

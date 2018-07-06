@@ -1,0 +1,53 @@
+{include file="$tplIndexHeader" /}
+<div id="right" class="right">
+    <h1><{$webName}></h1>
+    <div class="prompt">修改、删除操作等确认后进行。</div>
+   <!--  <div class="tab">
+        <a class="active" href="#">栓选条件一<span></span></a>
+        <a href="#">栓选条件二<span></span></a>
+    </div> -->
+    <div class="list">
+        <div class="operate clearFix">
+            <div class="operate-btn fl">
+                <a href="<{:Url($module_name.'/'.$controller_name.'/AddCata')}>" class="btn btn-blue">添加</a>
+                <a href="<{:Url($module_name.'/'.$controller_name.'/DelCata')}>" class="btn btn-blue">删除</a>
+            </div>
+            
+            </div>
+            
+        </div>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table01">
+            <thead>
+                <tr>
+                    <th width="14%">编号 <i class="icon icon-sort"></i></th>
+                    <th width="28%">功能名</th>
+                    <th width="16%">模块<i class="icon icon-rise"></i></th>
+                    <th width="24%">功能</th>
+                    <th width="18%">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {volist name="CataInfo" id="k" }
+                    <tr>
+                    <td><{$k.code}></td>
+                    <td><{$k.cName}></a></td>
+                    <td><{$k.cModule}></td>
+                    <td><{$k.cAction}></td>
+                    <td>
+                        <a href="<{:Url($module_name.'/'.$controller_name.'/EditCata',['id'=>$k.id])}>
+                            " class="text-blue">编辑</a>
+                        <a href="<{:Url($module_name.'/'.$controller_name.'/DelCata',['id'=>$k.id])}>" class="text-blue">删除</a>
+                        
+                    </td>
+                    </tr>
+                {/volist}                
+                
+
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+</body>
+</html>

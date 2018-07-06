@@ -1,0 +1,365 @@
+<html>
+<body>
+ <script type="text/javascript" src="__STATIC__/admin/Style/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/Style/js/common.js"></script>
+<!-- <script type="text/javascript" src="__STATIC__/admin/Style/js/jquery-1.8.3.min.js"></script> -->
+<script src="__STATIC__/date/WdatePicker.js"></script>
+ <script src="__STATIC__/echart/echarts.common.min.js"></script>
+ <script>
+    var product;
+    var productid
+    var productaa;
+    var goodsname;
+    var TempArr=[];
+  // $(document).ready(function(){
+   
+  //    changeF();
+    
+
+  //       });
+ $(function(){  
+    /*先将数据存入数组*/  
+    $("#typenum option").each(function(index, el) {  
+        TempArr[index] = $(this).text();  
+    });  
+    $(document).bind('click', function(e) {    
+        var e = e || window.event; //浏览器兼容性     
+        var elem = e.target || e.srcElement;    
+        while (elem) { //循环判断至跟节点，防止点击的是div子元素     
+            if (elem.id && (elem.id == 'typenum' || elem.id == "makeupCo")) {    
+                return;    
+            }    
+            elem = elem.parentNode;    
+        }    
+        $('#typenum').css('display', 'none'); //点击的不是div或其子元素     
+    });
+    getgoods();    
+})  
+  
+function changeF(this_) {  
+    $(this_).prev("input").val($(this_).find("option:selected").text());  
+    product=$('#typenum option:selected').val();
+    goodsname=$('#typenum option:selected').text();
+    $("#makeupCo").attr("value",goodsname);
+    $("#typenum").css({"display":"none"});  
+    getproduct();
+    getgoods();
+}  
+function setfocus(this_){  
+    $("#typenum").css({"display":""});  
+    var select = $("#typenum");  
+    var options;
+    select.html("");  
+    for(i=0;i<TempArr.length;i++){  
+        
+         options += "<option value="+TempArr[i]['goods_id']+">"+TempArr[i]['goods_name']+"</option>"; 
+        
+    }   
+    select.append(options);  
+}  
+  
+function setinput(this_){  
+    var select = $("#typenum");  
+    select.html("");  
+    var options;
+    
+    for(i=0;i<TempArr.length;i++){  
+        //若找到以txt的内容开头的，添option  
+
+        // if(TempArr[i]['goods_name'].substring(0,this_.value.length).indexOf(this_.value)==0){  
+        //   options += "<option value="+TempArr[i]['goods_id']+">"+TempArr[i]['goods_name']+"</option>";  
+              
+        // }  str.replace(/^\s+/,"");
+         if(TempArr[i]['goods_name'].indexOf(this_.value.replace(/^\s+/,""))>=0){  
+          options += "<option value="+TempArr[i]['goods_id']+">"+TempArr[i]['goods_name']+"</option>";  
+              
+        }  
+    }  
+    select.append(options);
+}  
+  
+  function getprice()
+   { 
+    myChart.showLoading();
+    $.ajax({ 
+        url: "http://price.zgycsc.com/echart/public/index.php/index/Yaocai/ajaxprice",         
+        type: 'POST',       //提交的方式
+        secureuri :false,   //是否启用安全提交     
+        data:{"id":productid,"leftime":leftime,"righttime":righttime},
+        dataType : 'json',
+         success: function(data){
+         
+            /////////上面为列表，下面为图表
+             var xdata= new Array();var ydata= new Array();
+             for(var i=0;i<data.length;i++)
+             {
+                     xdata[i]=data[i].theTime;
+                     ydata[i]=data[i].thePrice;
+                 };
+           
+              myChart.hideLoading();
+              myChart.setOption({
+
+               title: {
+                    text: '价格走势图',
+                },
+               legend: {
+                data:['药材价格']
+                 },
+              xAxis: {
+               // type:'', 
+                //minInterval: 1,
+                 data: xdata.reverse()
+                         },
+            yAxis: {
+             min: function(value) {
+                   return value.min - 20;
+                },
+             max: function(value) {
+                    return value.max + 20;
+                }
+             //scale:'true'
+                         },
+             series: [{
+                        // 根据名字对应到相应的系列
+                        name: '药材价格',
+                        type: 'line',
+                        data: ydata.reverse()
+                    }],
+   
+                });  
+                window.onresize = myChart.resize;           
+            }
+        });
+   }
+  function searchgo()
+  {
+      productid = document.getElementById('productid').value;
+      productaa=$('#productid option:selected').text();
+      leftime=document.getElementById('leftime').value;
+       righttime=document.getElementById('righttime').value;
+      if (productid)
+      {  
+      getprice(); 
+       }
+       else
+       {
+        alert("请选择药材");
+       }
+  } 
+
+  function getproduct()
+   {
+       $.ajax({ 
+          url: "http://price.zgycsc.com/echart/public/index.php/index/Yaocai/getproduct",   
+        type: 'POST',       //提交的方式
+        secureuri :false,   //是否启用安全提交  
+        data: {"product":product}, 
+        dataType : 'json',
+         success: function(data){
+             $('#yaoproduct').empty();//删除之前的数据
+                var s = '<select name=\"seachfor\" id=\"productid\" class=\"select01 fl\">';                      
+                for(var i=0;i<data.length;i++)
+                {
+               var url="<option value="+data[i]['id']+">"+data[i]['spec']+"/"+data[i]['market']+"/"+data[i]['quality']+"/"+data[i]['Origin']+"</option>";                    
+                    s+=url;
+                }  
+                s+="</select>";                               
+                $('#yaoproduct').append(s);
+             //console.log(data);
+          }
+        });
+
+     }   
+   function exlcdown()
+   {
+    if(product)
+    {
+    window.location.href="http://price.zgycsc.com/echart/public/index.php/index/Checkorder/check/id/"+product;
+    }
+    else{
+     
+     alert("请选择药材,如果您没有购买订阅套餐也可直接进入订阅页面");
+     } 
+   }    
+   function  getgoods()
+   {
+      $.ajax({ 
+          url: "http://price.zgycsc.com/echart/public/index.php/index/Yaocai/getgoods",   
+        type: 'POST',       //提交的方式
+        secureuri :false,   //是否启用安全提交  
+        //data: {"product":product}, 
+        dataType : 'json',
+         success: function(data){
+           TempArr=data;
+        // console.log(TempArr[0]['goods_name']);
+          }
+        });
+   } 
+  
+
+ </script>
+<style>
+.advertisement_wrap { width:100%; height:100%;background-color: rgba(0,0,0,0.7);z-index: 100001;position:fixed; background-image:url(http://www.xhjktj.com/Upload/outwx.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%; } 
+</style>
+
+{if condition="$showwhat eq 1"}
+   <!-- <notempty name="showwhat"> -->
+    <div class='advertisement_wrap' id='newUserPopup' style='display:block;'>
+    
+   
+    <!-- <img src="http://www.xhjktj.com/Upload/outwx.jpg"> -->
+   
+    
+    </div>
+   <!--  </notempty> -->
+    {/if}
+<div id="right" class="right">
+    <h1></h1>
+
+    <div>
+     
+            <div class="second">  
+                    <input type="text" name="makeupCo" id="makeupCo" class="makeinp" onfocus="setfocus(this)" oninput="setinput(this);" placeholder="请点击此处输入或选择药材"/>  
+                    <div>
+                    <select name="makeupCoSe" id="typenum" onchange="changeF(this)" size="10" style="display:none;">  
+                       
+                    </select> 
+                    </div> 
+                </div> 
+
+      
+              <span id="yaoproduct">
+               <select name="seachfor" id="productid" class="select01 fl">
+                <option value="">药材规格选择</option>
+               </select>
+               </span>  
+             <input id="leftime" class="Wdate" type="text" onFocus="WdatePicker({maxDate:'#F{$dp.$D(\'righttime\')||\'%y-%M-%d\'}'})"/> 
+<input id="righttime" class="Wdate" type="text" onFocus="WdatePicker({minDate:'#F{$dp.$D(\'leftime\')}',maxDate:'%y-%M-%d'})"/>
+                <button type="submit" class="search_btn btn-blue fl" onclick="searchgo()">查询</button>
+           
+        </div>
+    
+   
+    <div id="main" style="width: 90%;height:600px;">
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+        // 指定图表的配置项和数据
+        var option = {
+            title: {
+                text: '药材走势图',
+            
+            },
+           tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross'
+                }
+            },
+            toolbox: {
+                show: true,
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    dataView: {readOnly: false},
+                    magicType: {type: ['line', 'bar']},
+                    restore: {},
+                    saveAsImage: {}
+                }
+            },
+            // legend: {
+            //     data:['药材价格']
+            // },
+            xAxis: {
+             minInterval: 1,
+               data: []
+              
+            },
+            yAxis: {
+
+            },
+            //图片中的水印和文字
+            graphic: [
+                {
+                    type: 'image',
+                    id: 'logo',
+                    right: 100,
+                    top: 120,
+                    z: -0,
+                    bounding: 'raw',
+                    origin: [75, 75],
+                    style: {
+                        image: '/echart/public/static/admin/Style/images/logo-2.png',
+                        width: 300,
+                        height: 100,
+                        opacity: 0.4
+                    },
+
+                },
+                {
+                    type: 'group',
+                    rotation: Math.PI / 4,
+                    bounding: 'raw',
+                    right: 110,
+                    bottom: 110,
+                    z: 100,
+                    children: [
+                        {
+                            type: 'rect',
+                            left: 'center',
+                            top: 'center',
+                            z: 100,
+                            shape: {
+                                width: 400,
+                                height: 50
+                            },
+                            style: {
+                                fill: 'rgba(0,0,0,0.3)'
+                            }
+                        },
+                        {
+                            type: 'text',
+                            left: 'center',
+                            top: 'center',
+                            z: 100,
+                            style: {
+                                fill: '#fff',
+                                text: '中国药材市场提供',
+                                font: '20px Microsoft YaHei'
+                            }
+                        }
+                    ]
+                },
+               
+            ],
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        window.onresize = myChart.resize;
+    </script> 
+    </div>
+
+
+    <div class="list">
+        <div class="operate clearFix">
+            <div class="operate-btn fl">
+              <button type="submit" class="search_btn btn-blue fl" onclick="exlcdown()">导出数据</button>
+               <a class="trans" href="<{:Url('admin/Login/login')}>">登录<i class="icon icon-exit"></i></a>
+              <a class="trans" href="<{:Url('admin/Login/logout')}>">退出<i class="icon icon-exit"></i></a>
+              
+            </div>
+            
+            </div>
+        </div>
+      
+      
+    </div>
+</div>
+
+</body>
+
+
+</html>

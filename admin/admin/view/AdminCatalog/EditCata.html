@@ -1,0 +1,77 @@
+{include file="$tplIndexHeader" /}
+<SCRIPT LANGUAGE="JavaScript">
+    function opChangeVal(sval){
+        $.ajax({
+            type: "GET",
+            url: "getMaxCode/scode/"+sval,
+
+            //dataType: "json",
+            success : function(data){
+                 $("#code").val(data);
+            }
+        });
+    }
+//-->
+</SCRIPT>
+
+<div id="right" class="right">
+    <h1><{$webName}>--编辑</h1>
+    <div class="base">
+        <form action="<{:Url('admin/AdminCatalog/SaveCata')}>" method ="post" id="edit_cata" >
+            <input type="hidden" name="cata_id" value="<{$tableArr.id}>">
+            <input type="hidden" name="action" value="<{$action_name}>">
+            <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>上级栏目：</span>
+                 <select name="lastCode" id="status" class="base-select fl" onchange="opChangeVal(this.options[this.options.selectedIndex].value)">
+                   <{$catalogSelected|f_option_arr=###,$catalogOptionArr}>
+                </select>
+            </div>
+            <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>栏目编号：</span>
+                <input type="text" name="code" id="code"class="base-input fl" value="<{$tableArr.code}>">
+            </div>         
+             <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>栏目名称：</span>
+                <input type="text" name="cName" class="base-input fl" value="<{$tableArr.cName}>">
+            </div>
+           <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>模块：</span>
+                <input type="text" name="cModule" class="base-input fl" value="<{$tableArr.cModule}>">
+            </div>
+             <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>功能：</span>
+                <input type="text" name="cAction" class="base-input fl" value="<{$tableArr.cAction}>">
+            </div>
+             <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>链接：</span>
+                <input type="text" name="cUrl" class="base-input fl" value="<{$tableArr.cUrl}>">
+            </div>
+             <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>排序</span>
+                <input type="text" name="iOrder" class="base-input fl" value="<{$tableArr.iOrder}>">(越大越前)
+            </div>
+              <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>是否显示：</span>
+                <SELECT class="sel" NAME="iShow">
+                 <{$tableArr.iShow|f_option_arr=###,$setIsShowArr}>
+               </SELECT>
+            </div>
+            <div class="base-row clearFix">
+                <span class="base-name fl"><span class="text-red required">*</span>输入验证码</span>
+                    <input autocomplete="off" placeholder="请输入验证码" name="login_cap" type="text" validateevent="true" class="base-input fl">
+                    <div class="login_prompt">请输入验证码</div>
+                     </div>
+                     <div class="base-row clearFix">
+                        <span class="base-name fl"><span class="text-red required"></span></span>
+                   <img  style="login_verify" src="<{:captcha_src( )}>" alt="captcha" onclick="this.src='<{:captcha_src( )}>?'+Math.random();" />
+               </div>
+            <div class="base-row clearFix">
+                <span class="base-name fl">&nbsp;</span>
+                <input class="base-btn btn-blue fl" type="submit"></button>
+                <input class="base-btn btn-gray fl" type="reset"></button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>

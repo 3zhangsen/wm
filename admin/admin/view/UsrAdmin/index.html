@@ -1,0 +1,86 @@
+{include file="$tplIndexHeader" /}
+<div id="right" class="right">
+    <h1><{$webName}></h1>
+    <div class="prompt">修改、删除操作等确认后进行。</div>
+  <!--   <div class="tab">
+        <a class="active" href="#">栓选条件一<span></span></a>
+        <a href="#">栓选条件二<span></span></a>
+    </div> -->
+    <div class="list">
+        <div class="operate clearFix">
+            <div class="operate-btn fl">
+                <a href="<{:Url($module_name.'/'.$controller_name.'/AddUsr')}>" class="btn btn-blue">添加</a>
+                <a href="<{:Url($module_name.'/'.$controller_name.'/DelUsr')}>" class="btn btn-blue">删除</a>
+            </div>
+            <div class="search fr">
+                <form action="<{:Url($module_name.'/'.$controller_name.'/seachusr')}>" method="post">
+                    <select name="seachfor" id="seach1" class="select01 fl">
+                        <option value="0">按id</option>
+                        <option value="1">按昵称</option>
+                    </select>
+                    <input type="text" class="input01 fl" name ="seachwt" placeholder="请输入">
+                    <button type="submit" class="search_btn btn-blue fl">查询</button>
+                </form>
+            </div>
+        </div>
+        <table width="100%" border="0" cellpadding="0" cellspacing="0" class="table01">
+            <thead>
+                <tr>
+                    <th width="4%"><input type="checkbox"></th>
+                    <th width="10%">ID<i class="icon icon-sort"></i></th>
+                    <th width="20%">用户名</th>
+                    <th width="16%">注册时间<i class="icon icon-rise"></i></th>
+                    <th width="16%">最近登录</th>
+                    <th width="9%">权限</th>
+                    <th width="9%">状态<i class="icon icon-drop"></i></th>
+                    <th width="16%">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {if condition="empty($usrall)"}
+                <tr class="noData">
+                    <td colspan="9">暂无查询！</td>
+                </tr>
+                {else /}
+                {volist name="usrall" id="k" }
+                    <tr>
+                    <td><input type="checkbox"></td>
+                    <td><{$k.id}></td>
+                    <td><a href="#"><{$k.display_name}></a></td>
+                    <td><{$k.register_time}></td>
+                    <td><{$k.last_load}></td>
+                    <td><{$k.usr_group}></td>
+                    <td><span class="text-red"><{$k.usr_status}></span></td>
+                    <td>
+                        <a href="
+                        <{:Url($module_name.'/'.$controller_name.'/EditUsr',['id'=>$k.id])}>" class="text-blue">编辑</a>
+                        <a href="<{:Url($module_name.'/'.$controller_name.'/DelUsr',['id'=>$k.id])}>" class="text-blue">删除</a>
+                        
+
+                    </td>
+                    </tr>
+                {/volist}                
+                
+                {/if}
+            </tbody>
+        </table>
+<!--         <div class="page clearFix">
+            <span class="fl">已选 <b>1</b>项，共 <b>1</b> 项</span>
+            <div class="pageBar fr">
+                <span>每页显示</span>
+                <select name="" id="">
+                    <option value="0">10</option>
+                    <option value="1">20</option>
+                    <option value="2">40</option>
+                </select>
+                <a href="#">首页</a>
+                <a href="#">上一页</a>
+                <span>2/2</span>
+                <a href="#">下一页</a>
+                <a class="default" href="#">尾页</a>
+            </div>
+        </div> -->
+    </div>
+</div>
+</body>
+</html>

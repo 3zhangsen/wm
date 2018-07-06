@@ -1,0 +1,70 @@
+<html>
+<body>
+ <script type="text/javascript" src="__STATIC__/admin/Style/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/Style/js/common.js"></script>
+<script type="text/javascript" >
+    function  chick()
+   {
+      var checkId = ''; 
+  $("input[name='listId']:checked").each(
+    function(i)
+    {  
+      checkId += $(this).val()+',';
+    }
+  );
+  if(checkId == ''){
+    alert('请选择删除项!');
+    return false;
+  }
+  checkId = checkId.substring(0,checkId.length-1);
+   // alert(checkId);
+  if (confirm('确定订阅么?')){
+      
+      location.href="http://price.zgycsc.com/echart/public/index.php/index/Checkorder/saveorder/idlist/"+checkId;
+     
+   } 
+ }
+</script>
+<style>
+.advertisement_wrap { width:100%; height:100%;background-color: rgba(0,0,0,0.7);z-index: 100001;position:fixed; background-image:url(http://www.xhjktj.com/Upload/outwx.jpg); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%; } 
+</style>
+
+{if condition="$showwhat eq 1"}
+   <!-- <notempty name="showwhat"> -->
+    <div class='advertisement_wrap' id='newUserPopup' style='display:block;'>
+    
+   
+    <!-- <img src="http://www.xhjktj.com/Upload/outwx.jpg"> -->
+   
+    
+    </div>
+   <!--  </notempty> -->
+    {/if}
+<div id="right" class="right">
+    <h1></h1>
+    <div>   
+    <form action="" method="post">
+      <input type="text" name="makeupCo" id="makeupCo" class="makeinp" onfocus="setfocus(this)" oninput="setinput(this);" placeholder="请点击此处输入或选择药材"/>  
+     <div class="second">  
+       <div style="height: 200px ;overflow: auto;">
+        <table width="30%">
+          {volist name='product' id='val' key='i'}
+          <tr {if condition="$i%2 eq 1"}style="background-color:#EFFEDD"{/if}>
+            <td align="center"> 
+              <INPUT TYPE="checkbox" NAME="listId" value="<{$val.goods_id}>"> </td>
+            <td>
+              <{$val.goods_name}>
+            </td>
+          </tr>
+          {/volist}
+        </table>
+          </div> 
+      </div>  
+      <button type="button" class="search_btn btn-blue fl" onclick="chick()">提交订阅</button>
+     </form>
+        </div>
+</div>
+</body>
+
+
+</html>
