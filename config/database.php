@@ -13,15 +13,15 @@ return [
     // 数据库类型
     'type'            => 'mysql',
     // 服务器地址
-    'hostname'        => '10.66.104.0',
+    'hostname'        => '10.66.107.39',
     // 数据库名
-    'database'        => 'zgycscnewprice',
+    'database'        => 'imgsys',
     // 用户名
-    'username'        => 'zgycscnewprice',
+    'username'        => 'imgsys',
     // 密码
-    'password'        => 'uNZ68y..wUBtfWTss',
+    'password'        => 'zUhA2uc44CqRp8ZJ',
     // 端口
-    'hostport'        => '3613',
+    'hostport'        => '',
     // 连接dsn
     'dsn'             => '',
     // 数据库连接参数
@@ -29,7 +29,7 @@ return [
     // 数据库编码默认采用utf8
     'charset'         => 'utf8',
     // 数据库表前缀
-    'prefix'          => '',
+    'prefix'          => 'wm',
     // 数据库调试模式
     'debug'           => true,
     // 数据库部署方式:0 集中式(单一服务器),1 分布式(主从服务器)

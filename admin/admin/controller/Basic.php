@@ -3,12 +3,12 @@
    use think\Controller;
    class Basic extends Controller
      {  
-       public $UsrId='UsrId';
-       public $UsrIp='UsrIp';
-       public $UsrName='UsrName';
+       public $UsrId='wmUsrId';
+       public $UsrIp='wmUsrIp';
+       public $UsrName='wmUsrName';
        public $displayName='displayName';
-       public $UsrGroup='UsrGroup';
-       public $UsrStatus='UsrStatus';
+       public $UsrGroup='wmUsrGroup';
+       public $UsrStatus='wmUsrStatus';
        public $controller_name='Index';
        public $action_name='index';
        public $module_name='index';
